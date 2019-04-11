@@ -2,6 +2,7 @@
 #define __1001_H__
 
 #include <cstdio>
+#include <vector>
 #include <string>
 #include <algorithm>
 #include <stdexcept>

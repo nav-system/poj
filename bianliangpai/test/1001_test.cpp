@@ -204,6 +204,399 @@ TEST(CalculateIntergerExponentInString, normal_6) {
   EXPECT_EQ(result, "1.126825030131969720661201");
 }
 
+TEST(CalculateIntergerExponentInString, normal_7) {
+  const char* base = ".00001";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, ".00001");
+}
+
+TEST(CalculateIntergerExponentInString, normal_8) {
+  const char* base = ".12345";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, ".12345");
+}
+
+TEST(CalculateIntergerExponentInString, normal_9) {
+  const char* base = "0001.1";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "1.1");
+}
+
+TEST(CalculateIntergerExponentInString, normal_10) {
+  const char* base = "10.000";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "10");
+}
+
+TEST(CalculateIntergerExponentInString, normal_11) {
+  const char* base = "000.10";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, ".1");
+}
+
+TEST(CalculateIntergerExponentInString, normal_12) {
+  const char* base = "000000";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "0");
+}
+
+TEST(CalculateIntergerExponentInString, normal_13) {
+  const char* base = "000.00";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "0");
+}
+
+TEST(CalculateIntergerExponentInString, normal_14) {
+  const char* base = ".00000";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "0");
+}
+
+TEST(CalculateIntergerExponentInString, normal_15) {
+  const char* base = "000010";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "10");
+}
+
+TEST(CalculateIntergerExponentInString, normal_16) {
+  const char* base = "000.10";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, ".1");
+}
+
+TEST(CalculateIntergerExponentInString, normal_17) {
+  const char* base = "0000.1";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, ".1");
+}
+
+TEST(CalculateIntergerExponentInString, normal_18) {
+  const char* base = "00.111";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, ".111");
+}
+
+TEST(CalculateIntergerExponentInString, normal_19) {
+  const char* base = "0.0001";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, ".0001");
+}
+
+TEST(CalculateIntergerExponentInString, normal_20) {
+  const char* base = "0.0001";
+  int exponent = 3;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, ".000000000001");
+}
+
+TEST(CalculateIntergerExponentInString, normal_21) {
+  const char* base = "0.0010";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, ".001");
+}
+
+TEST(CalculateIntergerExponentInString, normal_22) {
+  const char* base = "0.0010";
+  int exponent = 3;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, ".000000001");
+}
+
+TEST(CalculateIntergerExponentInString, normal_23) {
+  const char* base = "0.0100";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, ".01");
+}
+
+TEST(CalculateIntergerExponentInString, normal_24) {
+  const char* base = "0.0100";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, ".01");
+}
+
+TEST(CalculateIntergerExponentInString, normal_25) {
+  const char* base = "0.0100";
+  int exponent = 3;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, ".000001");
+}
+
+TEST(CalculateIntergerExponentInString, normal_26) {
+  const char* base = "0.1000";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, ".1");
+}
+
+TEST(CalculateIntergerExponentInString, normal_27) {
+  const char* base = "0.1000";
+  int exponent = 3;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, ".001");
+}
+
+TEST(CalculateIntergerExponentInString, normal_28) {
+  const char* base = "1.000";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "1");
+}
+
+TEST(CalculateIntergerExponentInString, normal_29) {
+  const char* base = "1.0000";
+  int exponent = 3;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "1");
+}
+
+TEST(CalculateIntergerExponentInString, normal_30) {
+  const char* base = "1.0001";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "1.0001");
+}
+
+TEST(CalculateIntergerExponentInString, normal_31) {
+  const char* base = "1.0001";
+  int exponent = 3;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "1.000300030001");
+}
+
+TEST(CalculateIntergerExponentInString, normal_32) {
+  const char* base = "1.0010";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "1.001");
+}
+
+TEST(CalculateIntergerExponentInString, normal_33) {
+  const char* base = "1.0010";
+  int exponent = 3;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "1.003003001");
+}
+
+TEST(CalculateIntergerExponentInString, normal_34) {
+  const char* base = "1.0100";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "1.01");
+}
+
+TEST(CalculateIntergerExponentInString, normal_35) {
+  const char* base = "1.0100";
+  int exponent = 3;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "1.030301");
+}
+
+TEST(CalculateIntergerExponentInString, normal_36) {
+  const char* base = "1.1000";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "1.1");
+}
+
+TEST(CalculateIntergerExponentInString, normal_37) {
+  const char* base = "1.1000";
+  int exponent = 3;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "1.331");
+}
+
+TEST(CalculateIntergerExponentInString, normal_38) {
+  const char* base = "10.000";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "10");
+}
+
+TEST(CalculateIntergerExponentInString, normal_39) {
+  const char* base = "10.000";
+  int exponent = 3;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "1000");
+}
+
+TEST(CalculateIntergerExponentInString, normal_40) {
+  const char* base = "10.001";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "10.001");
+}
+
+TEST(CalculateIntergerExponentInString, normal_41) {
+  const char* base = "10.001";
+  int exponent = 3;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "1000.300030001");
+}
+
+TEST(CalculateIntergerExponentInString, normal_42) {
+  const char* base = "10.010";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "10.01");
+}
+
+TEST(CalculateIntergerExponentInString, normal_43) {
+  const char* base = "10.010";
+  int exponent = 3;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "1003.003001");
+}
+
+TEST(CalculateIntergerExponentInString, normal_44) {
+  const char* base = "10.100";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "10.1");
+}
+
+TEST(CalculateIntergerExponentInString, normal_45) {
+  const char* base = "10.100";
+  int exponent = 3;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "1030.301");
+}
+
+TEST(CalculateIntergerExponentInString, normal_46) {
+  const char* base = "99.000";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "99");
+}
+
+TEST(CalculateIntergerExponentInString, normal_47) {
+  const char* base = "99.000";
+  int exponent = 3;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "970299");
+}
+
+TEST(CalculateIntergerExponentInString, normal_48) {
+  const char* base = "99.001";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "99.001");
+}
+
+TEST(CalculateIntergerExponentInString, normal_49) {
+  const char* base = "99.001";
+  int exponent = 3;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "970328.403297001");
+}
+
+TEST(CalculateIntergerExponentInString, normal_50) {
+  const char* base = "99.010";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "99.01");
+}
+
+TEST(CalculateIntergerExponentInString, normal_51) {
+  const char* base = "99.010";
+  int exponent = 3;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "970593.059701");
+}
+
+TEST(CalculateIntergerExponentInString, normal_52) {
+  const char* base = "99.100";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "99.1");
+}
+
+TEST(CalculateIntergerExponentInString, normal_53) {
+  const char* base = "99.100";
+  int exponent = 3;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "973242.271");
+}
+
+TEST(CalculateIntergerExponentInString, normal_54) {
+  const char* base = "99.998";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "99.998");
+}
+
+TEST(CalculateIntergerExponentInString, normal_55) {
+  const char* base = "99.998";
+  int exponent = 3;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "999940.0011999921");
+}
+
+
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
