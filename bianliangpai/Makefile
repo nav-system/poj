@@ -19,7 +19,7 @@ TEST_LIBRARIES=-lgtest -lpthread
 
 TARGET_DIR=out
 
-RELEASE_TARGET=${ID}
+RELEASE_TARGET=release
 DEBUG_TARGET=debug
 TEST_TARGET=unittest
 
