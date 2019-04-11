@@ -176,11 +176,11 @@ void ConvertBaseToInterger(std::string& number,
       std::find(number.begin(), number.end(), '.');
 
     if (decimal_point_it != number.end()) {
-      decimal_point_position = std::distance(number.begin(), decimal_point_it);
+      decimal_point_position = std::distance(decimal_point_it, number.end()-1);
       number.erase(decimal_point_it);
     }
     else {
-      decimal_point_position = number.length();
+      decimal_point_position = 0;
     }
 
     CHECK_STRING_VALIDATION(number);
@@ -193,7 +193,20 @@ void ConvertBaseToInterger(std::string& number,
 
 void AdjustFormat(std::string& result, std::size_t decimal_point_position) {
   try {
-
+    if (decimal_point_position > 0) {
+      if (decimal_point_position <= result.length()) {
+        result.insert(result.length()-decimal_point_position, 1, '.');
+        // remove trailing '0'
+        for (auto it = result.end()-1; *it != '.' && *it == '0'; ) {
+          it = result.erase(it);
+          --it;
+        }
+      }
+      else {
+        std::string zero_ahead(decimal_point_position-result.length(), '0');
+        result = std::string(".") + zero_ahead + result;
+      }
+    }
   }
   catch(const std::exception& e) {
     printf("File: %s, Line: %d, Reason: %s\n", __FILE__, __LINE__, e.what());
@@ -206,6 +219,7 @@ void CalculateIntergerExponentInString(const char* base,
                                        std::string& result) {
   try {
     std::string multiplier(base);
+    // end()-1 => 0
     std::size_t decimal_point_position = 0;
     ConvertBaseToInterger(multiplier, decimal_point_position);
     result.assign(multiplier);

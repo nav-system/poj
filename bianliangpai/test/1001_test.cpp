@@ -14,7 +14,7 @@ TEST(ConvertBaseToInterger, left_decimal_point) {
   std::size_t decimal_point_position;
   ConvertBaseToInterger(number, decimal_point_position);
   EXPECT_EQ(number, "123321");
-  EXPECT_EQ(decimal_point_position, 0);
+  EXPECT_EQ(decimal_point_position, 6);
 }
 
 TEST(ConvertBaseToInterger, right_decimal_point) {
@@ -22,7 +22,7 @@ TEST(ConvertBaseToInterger, right_decimal_point) {
   std::size_t decimal_point_position;
   ConvertBaseToInterger(number, decimal_point_position);
   EXPECT_EQ(number, "123321");
-  EXPECT_EQ(decimal_point_position, 6);
+  EXPECT_EQ(decimal_point_position, 0);
 }
 
 TEST(ConvertBaseToInterger, no_decimal_point) {
@@ -30,7 +30,7 @@ TEST(ConvertBaseToInterger, no_decimal_point) {
   std::size_t decimal_point_position;
   ConvertBaseToInterger(number, decimal_point_position);
   EXPECT_EQ(number, "123321");
-  EXPECT_EQ(decimal_point_position, 6);
+  EXPECT_EQ(decimal_point_position, 0);
 }
 
 TEST(CalculateIntergerOneCharProductInString, normal_1) {
