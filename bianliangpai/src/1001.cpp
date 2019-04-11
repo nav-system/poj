@@ -2,7 +2,7 @@
 
 int main() {
   // c++ style I/O sucks
-  constexpr int base_length = 6;
+  const static int base_length = 6;
   char base[base_length] = { '\0' };
   int exponent = -1;
   while (2 == std::scanf("%s%d", base, &exponent)) {

@@ -8,8 +8,9 @@
 
 void CheckStringValidation(const std::string& s, int functioncall_line_num) {
   try {
-    for (char ch : s) {
-      if (ch < '0' || ch > '9') {
+    for (std::string::const_iterator it = s.begin(); it != s.end(); ++it) {
+    // for (char ch : s) {
+      if (*it < '0' || *it > '9') {
         throw std::runtime_error("string s invalid");
       }
     }
@@ -28,10 +29,10 @@ void CheckStringValidation(const std::string& s, int functioncall_line_num) {
 
 void RemoveStringAheadZero(std::string& s) {
   try {
-    for (auto reverse_it = s.rbegin(); reverse_it != s.rend()-1; ) {
-      if (*reverse_it == '0') {
-        ++reverse_it;
-        s.pop_back();
+    for (std::string::iterator it = s.end()-1; it != s.begin(); ) {
+      if (*it == '0') {
+        --it;
+        s.erase(it+1);
       }
       else {
         break;
@@ -57,7 +58,7 @@ void CalculateIntergerOneCharProductInString(const std::string& multiplier,
 
     // do multiplication char by char
     int carry_number = 0;
-    for (auto reverse_it = multiplier.rbegin();
+    for (std::string::const_reverse_iterator reverse_it = multiplier.rbegin();
          reverse_it != multiplier.rend(); ++reverse_it) {
       int char_char_multiplication = (ch-'0') * (*reverse_it-'0') + carry_number;
       carry_number = char_char_multiplication / 10;
@@ -140,7 +141,7 @@ void CalculateIntergerProductInString(const std::string& multiplier,
     CHECK_STRING_VALIDATION(current_result);
 
     std::string tmp_result("0");
-    for (auto multiplier_reverse_it = multiplier.rbegin();
+    for (std::string::const_reverse_iterator multiplier_reverse_it = multiplier.rbegin();
          multiplier_reverse_it != multiplier.rend(); ++multiplier_reverse_it) {
 
       std::string one_char_product;
@@ -197,7 +198,8 @@ void AdjustFormat(std::string& result, std::size_t decimal_point_position) {
       if (decimal_point_position <= result.length()) {
         result.insert(result.length()-decimal_point_position, 1, '.');
         // remove trailing '0'
-        for (auto it = result.end()-1; *it != '.' && *it == '0'; ) {
+        for (std::string::iterator it = result.end()-1;
+             *it != '.' && *it == '0'; ) {
           it = result.erase(it);
           --it;
         }
