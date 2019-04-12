@@ -178,7 +178,7 @@ void ConvertBaseToInterger(std::string& number,
       std::find(number.begin(), number.end(), '.');
 
     if (decimal_point_it != number.end()) {
-      decimal_point_position = std::distance(decimal_point_it, number.end()-1);
+      decimal_point_position = std::distance(decimal_point_it, number.end())-1;
       number.erase(decimal_point_it);
     }
     else {
@@ -193,21 +193,45 @@ void ConvertBaseToInterger(std::string& number,
   }
 }
 
+// 1. when being passed into this function, result contained no '.'
+// 2. decimal_point_position starts from string right
 void AdjustFormat(std::string& result, std::size_t decimal_point_position) {
   try {
-    if (decimal_point_position > 0) {
-      if (decimal_point_position <= result.length()) {
-        result.insert(result.length()-decimal_point_position, 1, '.');
-        // remove trailing '0'
-        for (std::string::iterator it = result.end()-1;
-             *it != '.' && *it == '0'; ) {
-          it = result.erase(it);
-          --it;
-        }
+    // push '.' to the position it should to be
+    if (decimal_point_position > 0 &&
+        decimal_point_position <= result.length()) {
+      result.insert(result.length()-decimal_point_position, 1, '.');
+    }
+    else if (decimal_point_position > result.length()) {
+      std::string zero_ahead(decimal_point_position-result.length(), '0');
+      result = std::string(".") + zero_ahead + result;
+    }
+    // for case 'decimal_point_position == 0'
+    // no decimal point in number string or decimal point position is end()-1
+    else {
+      result += ".";
+    }
+
+    // remove trailing '0'
+    for (std::string::iterator it = result.end()-1; *it == '0'; ) {
+      it = result.erase(it);
+      --it;
+    }
+    // remove ahead '0'
+    for (std::string::iterator it = result.begin(); *it == '0'; ) {
+      it = result.erase(it);
+    }
+
+    // remove trailing '.'
+    if (result.length() > 1) {
+      if (*(result.end()-1) == '.') {
+        result.erase(result.end()-1);
       }
-      else {
-        std::string zero_ahead(decimal_point_position-result.length(), '0');
-        result = std::string(".") + zero_ahead + result;
+    }
+    else {
+      // result[0] is the last element, since result.length() == 1
+      if (result[0] == '.') {
+        result[0] = '0';
       }
     }
   }

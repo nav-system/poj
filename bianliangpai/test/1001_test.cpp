@@ -228,6 +228,14 @@ TEST(CalculateIntergerExponentInString, normal_9) {
   EXPECT_EQ(result, "1.1");
 }
 
+TEST(CalculateIntergerExponentInString, normal_9_5) {
+  const char* base = "1.1000";
+  int exponent = 1;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "1.1");
+}
+
 TEST(CalculateIntergerExponentInString, normal_10) {
   const char* base = "10.000";
   int exponent = 1;
@@ -593,7 +601,7 @@ TEST(CalculateIntergerExponentInString, normal_55) {
   int exponent = 3;
   std::string result;
   CalculateIntergerExponentInString(base, exponent, result);
-  EXPECT_EQ(result, "999940.0011999921");
+  EXPECT_EQ(result, "999940.001199992");
 }
 
 
