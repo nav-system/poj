@@ -28,10 +28,27 @@ void CheckStringValidation(const std::string& s, int functioncall_line_num) {
     CheckStringValidation(s, __LINE__); \
   } while(0)
 
-void RemoveStringAheadZero(std::string& s) {
+void RemoveStringAhead(const char& ch, std::string& s) {
+  try {
+    for (std::string::iterator it = s.begin(); it != s.end(); ) {
+      if (*it == ch) {
+        it = s.erase(it);
+      }
+      else {
+        break;
+      }
+    }
+  }
+  catch(const std::exception& e) {
+    printf("File: %s, Line: %d, Reason: %s\n", __FILE__, __LINE__, e.what());
+    exit(1);
+  }
+}
+
+void RemoveStringTrailing(const char& ch, std::string& s) {
   try {
     for (std::string::iterator it = s.end()-1; it != s.begin(); ) {
-      if (*it == '0') {
+      if (*it == ch) {
         --it;
         s.erase(it+1);
       }
@@ -40,7 +57,7 @@ void RemoveStringAheadZero(std::string& s) {
       }
     }
   }
-  catch(const std::exception& e) {
+  catch (const std::exception& e) {
     printf("File: %s, Line: %d, Reason: %s\n", __FILE__, __LINE__, e.what());
     exit(1);
   }
@@ -68,10 +85,7 @@ void CalculateIntergerOneCharProductInString(const std::string& multiplier,
     }
     result.push_back(carry_number+'0');
 
-
-    // remove useless zero ahead of number, such as 0100 => 100
-    RemoveStringAheadZero(result);
-
+    RemoveStringTrailing('0', result);
     // ahead code use std::string::push_back, so std::reverse here
     std::reverse(result.begin(), result.end());
   }
@@ -121,9 +135,7 @@ void CalculateIntergerAdditionInString(const std::string& num1, std::string& num
     }
     tmp_result.push_back(carry_number+'0');
 
-    // remove useless zero ahead of number, such as 0100 => 100
-    RemoveStringAheadZero(tmp_result);
-
+    RemoveStringTrailing('0', tmp_result);
     // ahead code use std::string::push_back, so std::reverse here
     std::reverse(tmp_result.begin(), tmp_result.end());
 
@@ -212,27 +224,13 @@ void AdjustFormat(std::string& result, std::size_t decimal_point_position) {
       result += ".";
     }
 
-    // remove trailing '0'
-    for (std::string::iterator it = result.end()-1; *it == '0'; ) {
-      it = result.erase(it);
-      --it;
-    }
-    // remove ahead '0'
-    for (std::string::iterator it = result.begin(); *it == '0'; ) {
-      it = result.erase(it);
-    }
+    RemoveStringAhead('0', result);
+    RemoveStringTrailing('0', result);
+    RemoveStringTrailing('.', result);
 
-    // remove trailing '.'
-    if (result.length() > 1) {
-      if (*(result.end()-1) == '.') {
-        result.erase(result.end()-1);
-      }
-    }
-    else {
-      // result[0] is the last element, since result.length() == 1
-      if (result[0] == '.') {
+    // if just single '.', then replaced with '0'
+    if (result.length() == 1 && result[0] == '.') {
         result[0] = '0';
-      }
     }
   }
   catch(const std::exception& e) {
