@@ -156,6 +156,48 @@ TEST(CalculateIntergerProductInString, zero_2) {
   EXPECT_EQ(num2, "0");
 }
 
+TEST(AdjustFormat, remove_ahead_zero_1) {
+  std::string s = "000123456789";
+  int decimal_point_position = 9;
+  AdjustFormat(s, decimal_point_position);
+  EXPECT_EQ(s, ".123456789");
+}
+
+TEST(AdjustFormat, remove_ahead_zero_2) {
+  std::string s = "000123456789";
+  int decimal_point_position = 6;
+  AdjustFormat(s, decimal_point_position);
+  EXPECT_EQ(s, "123.456789");
+}
+
+TEST(AdjustFormat, remove_trailing_zero_1) {
+  std::string s = "123456789000";
+  int decimal_point_position = 3;
+  AdjustFormat(s, decimal_point_position);
+  EXPECT_EQ(s, "123456789");
+}
+
+TEST(AdjustFormat, remove_trailing_zero_2) {
+  std::string s = "123456789000";
+  int decimal_point_position = 2;
+  AdjustFormat(s, decimal_point_position);
+  EXPECT_EQ(s, "1234567890");
+}
+
+TEST(AdjustFormat, remove_trailing_zero_3) {
+  std::string s = "123456789000";
+  int decimal_point_position = 0;
+  AdjustFormat(s, decimal_point_position);
+  EXPECT_EQ(s, "123456789000");
+}
+
+TEST(AdjustFormat, remove_trailing_dot) {
+  std::string s = "000123456789";
+  int decimal_point_position = 0;
+  AdjustFormat(s, decimal_point_position);
+  EXPECT_EQ(s, "123456789");
+}
+
 TEST(CalculateIntergerExponentInString, normal_1) {
   const char* base = "95.123";
   int exponent = 12;
