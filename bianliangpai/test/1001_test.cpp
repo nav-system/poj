@@ -646,6 +646,15 @@ TEST(CalculateIntergerExponentInString, normal_55) {
   EXPECT_EQ(result, "999940.001199992");
 }
 
+TEST(CalculateIntergerExponentInString, normal_56) {
+  const char* base = "99.999";
+  int exponent = 25;
+  std::string result;
+  CalculateIntergerExponentInString(base, exponent, result);
+  EXPECT_EQ(result, "99975002999770012649468717709519310815545705768715.426520024799744573673126042964184298069822900531298735002299997000002499999");
+}
+
+
 
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);

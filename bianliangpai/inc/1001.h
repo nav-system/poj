@@ -226,8 +226,8 @@ void AdjustFormat(std::string& result, std::size_t decimal_point_position) {
 
     RemoveStringAhead('0', result);
     RemoveStringTrailing('0', result);
-    RemoveStringTrailing('.', result);
 
+    RemoveStringTrailing('.', result);
     // if just single '.', then replaced with '0'
     if (result.length() == 1 && result[0] == '.') {
         result[0] = '0';

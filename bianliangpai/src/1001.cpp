@@ -17,8 +17,8 @@ int main() {
       break;
     }
   }
-  for (int result_it = 0; result_it < results.size(); ++result_it) {
-    printf("%s\n", results[result_it].c_str());
+  for (int it = 0; it < results.size(); ++it) {
+    printf("%s", results[it].c_str());
   }
   return 0;
 }
