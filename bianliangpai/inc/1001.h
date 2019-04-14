@@ -95,21 +95,16 @@ void CalculateIntergerOneCharProductInString(const std::string& multiplier,
   }
 }
 
-void CalculateIntergerAdditionInString(const std::string& num1, std::string& num2) {
+void CalculateIntergerAdditionInString(const std::string& num1,
+                                       const std::string& num2,
+                                       std::string& result) {
   try {
     CHECK_STRING_VALIDATION(num1);
     CHECK_STRING_VALIDATION(num2);
 
     // TODO: remove new memory allocation
-    std::string longer_num, shorter_num;
-    if (num1.length() >= num2.length()) {
-      longer_num = num1;
-      shorter_num = num2;
-    }
-    else {
-      longer_num = num2;
-      shorter_num = num1;
-    }
+    std::string longer_num  = num1.length() > num2.length() ? num1 : num2;
+    std::string shorter_num = num1.length() > num2.length() ? num2 : num1;
 
     // do addition char by char
     std::string tmp_result;
@@ -139,7 +134,7 @@ void CalculateIntergerAdditionInString(const std::string& num1, std::string& num
     // ahead code use std::string::push_back, so std::reverse here
     std::reverse(tmp_result.begin(), tmp_result.end());
 
-    std::swap(tmp_result, num2);
+    std::swap(tmp_result, result);
   }
   catch(const std::exception& e) {
     printf("File: %s, Line: %d, Reason: %s\n", __FILE__, __LINE__, e.what());
@@ -147,35 +142,43 @@ void CalculateIntergerAdditionInString(const std::string& num1, std::string& num
   }
 }
 
-void CalculateIntergerProductInString(const std::string& multiplier,
-                                      std::string& current_result) {
+void CalculateIntergerProductInString(const std::string& multiplier1,
+                                      const std::string& multiplier2,
+                                      std::string& result) {
   try {
-    CHECK_STRING_VALIDATION(multiplier);
-    CHECK_STRING_VALIDATION(current_result);
+    CHECK_STRING_VALIDATION(multiplier1);
+    CHECK_STRING_VALIDATION(multiplier2);
+    CHECK_STRING_VALIDATION(result);
 
-    std::string tmp_result("0");
-    for (std::string::const_reverse_iterator multiplier_reverse_it = multiplier.rbegin();
-         multiplier_reverse_it != multiplier.rend(); ++multiplier_reverse_it) {
+    std::string history_addition_result("0");
+    for (std::string::const_reverse_iterator multiplier_reverse_it = multiplier2.rbegin();
+         multiplier_reverse_it != multiplier2.rend(); ++multiplier_reverse_it) {
 
       std::string one_char_product;
-      CalculateIntergerOneCharProductInString(current_result,
+      CalculateIntergerOneCharProductInString(multiplier1,
                                               *multiplier_reverse_it,
                                               one_char_product);
 
-      // add one char result into tmp_result
+      // add one char result into history_addition_result
       // string * 10 equal to push_back('0')
       std::size_t place_number =
-        std::distance(multiplier.rbegin(), multiplier_reverse_it);
-      if (place_number > multiplier.length()) {
-        throw std::runtime_error("place_number > multiplier.length()");
+        std::distance(multiplier2.rbegin(), multiplier_reverse_it);
+      if (place_number > multiplier2.length()) {
+        throw std::runtime_error("place_number > multiplier2.length()");
       }
       else if (place_number > 0) {
         std::string tmp(place_number, '0');
         one_char_product += tmp;
       }
-      CalculateIntergerAdditionInString(one_char_product, tmp_result);
+
+      // add one_char_product to history result
+      std::string new_addition_result;
+      CalculateIntergerAdditionInString(one_char_product,
+                                        history_addition_result,
+                                        new_addition_result);
+      std::swap(history_addition_result, new_addition_result);
     }
-    std::swap(tmp_result, current_result);
+    std::swap(history_addition_result, result);
   }
   catch(const std::exception& e) {
     printf("File: %s, Line: %d, Reason: %s\n", __FILE__, __LINE__, e.what());
@@ -205,8 +208,8 @@ void ConvertBaseToInterger(std::string& number,
   }
 }
 
-// 1. when being passed into this function, result contained no '.'
-// 2. decimal_point_position starts from string right
+// 1. when being passed into this function, 'result' contained no '.'
+// 2. decimal_point_position counting start from right side of string
 void AdjustFormat(std::string& result, std::size_t decimal_point_position) {
   try {
     // push '.' to the position it should to be
@@ -239,7 +242,7 @@ void AdjustFormat(std::string& result, std::size_t decimal_point_position) {
   }
 }
 
-void CalculateIntergerExponentInString(const char* base,
+void CalculateIntergerExponentInString(const std::string& base,
                                        int exponent,
                                        std::string& result) {
   try {
@@ -247,13 +250,21 @@ void CalculateIntergerExponentInString(const char* base,
     // end()-1 => 0
     std::size_t decimal_point_position = 0;
     ConvertBaseToInterger(multiplier, decimal_point_position);
-    result.assign(multiplier);
 
-    // result initialized as base ahead, so here use exponent-1
+    std::string history_product_result(multiplier);
+
+    // history_product_result initialized as multiplier, so exponent-1 here
     for (int multiply_cnt = 0; multiply_cnt < exponent-1; ++multiply_cnt) {
-      CalculateIntergerProductInString(multiplier, result);
+      std::string tmp_result;
+      CalculateIntergerProductInString(multiplier,
+                                       history_product_result,
+                                       tmp_result);
+      history_product_result.assign(tmp_result);
     }
-    AdjustFormat(result, decimal_point_position*exponent);
+
+    AdjustFormat(history_product_result, decimal_point_position*exponent);
+
+    std::swap(history_product_result, result);
   }
   catch(const std::exception& e) {
     printf("File: %s, Line: %d, Reason: %s\n", __FILE__, __LINE__, e.what());

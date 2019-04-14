@@ -68,92 +68,105 @@ TEST(CalculateIntergerOneCharProductInString, zero) {
 TEST(CalculateIntergerAdditionInString, normal_1) {
   std::string num1 = "8426";
   std::string num2 = "8896";
-  CalculateIntergerAdditionInString(num1, num2);
-  EXPECT_EQ(num2, "17322");
+  std::string result;
+  CalculateIntergerAdditionInString(num1, num2, result);
+  EXPECT_EQ(result, "17322");
 }
 
 TEST(CalculateIntergerAdditionInString, normal_2) {
   std::string num1 = "18000";
   std::string num2 = "8896";
-  CalculateIntergerAdditionInString(num1, num2);
-  EXPECT_EQ(num2, "26896");
+  std::string result;
+  CalculateIntergerAdditionInString(num1, num2, result);
+  EXPECT_EQ(result, "26896");
 }
 
 TEST(CalculateIntergerAdditionInString, normal_3) {
   std::string num1 = "8000";
   std::string num2 = "18896";
-  CalculateIntergerAdditionInString(num1, num2);
-  EXPECT_EQ(num2, "26896");
+  std::string result;
+  CalculateIntergerAdditionInString(num1, num2, result);
+  EXPECT_EQ(result, "26896");
 }
 
 TEST(CalculateIntergerAdditionInString, normal_4) {
   std::string num1 = "80";
   std::string num2 = "18896";
-  CalculateIntergerAdditionInString(num1, num2);
-  EXPECT_EQ(num2, "18976");
+  std::string result;
+  CalculateIntergerAdditionInString(num1, num2, result);
+  EXPECT_EQ(result, "18976");
 }
 
 TEST(CalculateIntergerAdditionInString, normal_5) {
   std::string num1 = "18896";
   std::string num2 = "80";
-  CalculateIntergerAdditionInString(num1, num2);
-  EXPECT_EQ(num2, "18976");
+  std::string result;
+  CalculateIntergerAdditionInString(num1, num2, result);
+  EXPECT_EQ(result, "18976");
 }
 
 TEST(CalculateIntergerAdditionInString, normal_and_zero) {
   std::string num1 = "8426";
   std::string num2 = "0000";
-  CalculateIntergerAdditionInString(num1, num2);
-  EXPECT_EQ(num2, "8426");
+  std::string result;
+  CalculateIntergerAdditionInString(num1, num2, result);
+  EXPECT_EQ(result, "8426");
 }
 
 TEST(CalculateIntergerProductInString, normal_1) {
   std::string num1 = "147";
   std::string num2 = "258";
-  CalculateIntergerProductInString(num1, num2);
-  EXPECT_EQ(num2, "37926");
+  std::string result;
+  CalculateIntergerProductInString(num1, num2, result);
+  EXPECT_EQ(result, "37926");
 }
 
 TEST(CalculateIntergerProductInString, normal_2) {
   std::string num1 = "4";
   std::string num2 = "256";
-  CalculateIntergerProductInString(num1, num2);
-  EXPECT_EQ(num2, "1024");
+  std::string result;
+  CalculateIntergerProductInString(num1, num2, result);
+  EXPECT_EQ(result, "1024");
 }
 
 TEST(CalculateIntergerProductInString, normal_3) {
   std::string num1 = "256";
   std::string num2 = "4";
-  CalculateIntergerProductInString(num1, num2);
-  EXPECT_EQ(num2, "1024");
+  std::string result;
+  CalculateIntergerProductInString(num1, num2, result);
+  EXPECT_EQ(result, "1024");
 }
 
 TEST(CalculateIntergerProductInString, normal_4) {
   std::string num1 = "256";
   std::string num2 = "16";
-  CalculateIntergerProductInString(num1, num2);
-  EXPECT_EQ(num2, "4096");
+  std::string result;
+  CalculateIntergerProductInString(num1, num2, result);
+  EXPECT_EQ(result, "4096");
 }
 
 TEST(CalculateIntergerProductInString, normal_5) {
   std::string num1 = "16";
   std::string num2 = "256";
-  CalculateIntergerProductInString(num1, num2);
-  EXPECT_EQ(num2, "4096");
+  std::string result;
+  CalculateIntergerProductInString(num1, num2, result);
+  EXPECT_EQ(result, "4096");
 }
 
 TEST(CalculateIntergerProductInString, zero_1) {
   std::string num1 = "147";
   std::string num2 = "000";
-  CalculateIntergerProductInString(num1, num2);
-  EXPECT_EQ(num2, "0");
+  std::string result;
+  CalculateIntergerProductInString(num1, num2, result);
+  EXPECT_EQ(result, "0");
 }
 
 TEST(CalculateIntergerProductInString, zero_2) {
   std::string num1 = "147";
   std::string num2 = "0";
-  CalculateIntergerProductInString(num1, num2);
-  EXPECT_EQ(num2, "0");
+  std::string result;
+  CalculateIntergerProductInString(num1, num2, result);
+  EXPECT_EQ(result, "0");
 }
 
 TEST(AdjustFormat, remove_ahead_zero_1) {
