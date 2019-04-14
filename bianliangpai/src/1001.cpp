@@ -10,7 +10,8 @@ int main() {
     if (2 == ret) {
       std::string result;
       CalculateIntergerExponentInString(base, exponent, result);
-      printf("%s\n", result.c_str());
+      //printf("%s\n", result.c_str());
+      std::cout << result << std::endl;
     }
     else if (ret == EOF) {
       break;
