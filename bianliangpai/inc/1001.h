@@ -108,6 +108,7 @@ void CalculateIntergerAdditionInString(const std::string& num1,
 
     // do addition char by char
     std::string tmp_result;
+    tmp_result.reserve(longer_num.length()+1);
     int carry_number = 0;
     for (int long_it = longer_num.length()-1; long_it >= 0; --long_it) {
       int shorter_it = shorter_num.length() - (longer_num.length() - long_it);
