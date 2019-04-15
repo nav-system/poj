@@ -1,6 +1,6 @@
 # !/bin/bash
+
 Id="$1"
-Excutable=./out/${Id}_profile
 
 echo ""
 echo ""
@@ -28,8 +28,11 @@ echo "===          executing target program         ==="
 echo "================================================="
 echo ""
 
-${Excutable}
-gprof ${Excutable} gmon.out > profile_result.txt
+if [ -f conf/${Id}_console_input.txt ]; then
+  out/${Id}_profile < conf/${Id}_console_input.txt
+else
+  out/${Id}_profile
+fi
 
 echo ""
 echo ""
@@ -38,4 +41,5 @@ echo "===          profiling result display         ==="
 echo "================================================="
 echo ""
 
+gprof out/${Id}_profile gmon.out > profile_result.txt
 head -n 20 profile_result.txt
