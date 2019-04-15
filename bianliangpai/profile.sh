@@ -29,8 +29,10 @@ echo "================================================="
 echo ""
 
 if [ -f conf/${Id}_console_input.txt ]; then
+  echo "running target program with console input"
   out/${Id}_profile < conf/${Id}_console_input.txt
 else
+  echo "running target program without console input"
   out/${Id}_profile
 fi
 
