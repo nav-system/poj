@@ -8,6 +8,8 @@
 
 const static int telephone_number_length = 7;
 
+// read console input char by char to throw '-' away
+// which could reduce momory copy operation
 void ReadTelephoneNumbersFromConsole(std::vector<std::string>& telephone_numbers) {
   try {
     // preprocessing input telephone number format
