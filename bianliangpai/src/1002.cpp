@@ -12,7 +12,10 @@ int main() {
 
     // preprocess line input
     std::string telephone_number(telephone_number_length, '\0');
-    ReadTelephoneNumber(telephone_number);
+    std::string line;
+    std::getline(std::cin, line);
+    GetTelephoneNumber(line, telephone_number);
+    printf("telephone_number: %s\n", telephone_number.c_str());
 
     // search and count
     std::map<std::string, std::size_t>::iterator it =

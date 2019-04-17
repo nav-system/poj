@@ -3,47 +3,48 @@
 
 #include <cstdlib>
 #include <cstdio>
+#include <iostream>
 #include <map>
 #include <string>
 #include <stdexcept>
 
 const static int telephone_number_length = 8;
 
-int ConvertLetterToDigit(char ch) {
+char ConvertLetterToDigit(char ch) {
   try {
     switch (ch) {
     case 'A':
     case 'B':
     case 'C':
-      return 2;
+      return '2';
     case 'D':
     case 'E':
     case 'F':
-      return 3;
+      return '3';
     case 'G':
     case 'H':
     case 'I':
-      return 4;
+      return '4';
     case 'J':
     case 'K':
     case 'L':
-      return 5;
+      return '5';
     case 'M':
     case 'N':
     case 'O':
-      return 6;
+      return '6';
     case 'P':
     case 'R':
     case 'S':
-      return 7;
+      return '7';
     case 'T':
     case 'U':
     case 'V':
-      return 8;
+      return '8';
     case 'W':
     case 'X':
     case 'Y':
-      return 9;
+      return '9';
     default:
       throw std::runtime_error("error input");
     }
@@ -56,12 +57,18 @@ int ConvertLetterToDigit(char ch) {
 
 // read console input char by char to throw '-' away
 // which could reduce momory copy operation
-void ReadTelephoneNumber(std::string& telephone_number) {
+void GetTelephoneNumber(const std::string& line,
+                        std::string& telephone_number) {
   try {
+    std::string::const_iterator line_it = line.begin();
+
     for (int telephone_number_it = 0; ; ) {
 
       if (telephone_number_it > telephone_number_length) {
         throw std::runtime_error("telephone number length invalid");
+      }
+      if (line_it == line.end()) {
+        break;
       }
 
       // result format is xxx-xxxx
@@ -70,8 +77,8 @@ void ReadTelephoneNumber(std::string& telephone_number) {
         ++telephone_number_it;
       }
 
-      char ch;
-      std::scanf("%c", &ch);
+      char ch = *line_it;
+      ++line_it;
       if ((ch >= '0' && ch <= '9')) {
         telephone_number[telephone_number_it] = ch;
         ++telephone_number_it;
@@ -79,9 +86,6 @@ void ReadTelephoneNumber(std::string& telephone_number) {
       else if (ch >= 'A' && ch <= 'Z') {
         telephone_number[telephone_number_it] = ConvertLetterToDigit(ch);
         ++telephone_number_it;
-      }
-      else if (ch == '\n') {
-        break;
       }
       // '\r', '-'
       else {
