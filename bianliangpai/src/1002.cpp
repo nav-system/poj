@@ -23,16 +23,22 @@ int main() {
       ++it->second;
     }
     else {
-      telephone_numbers.insert( { telephone_number, 1 } );
+      telephone_numbers[telephone_number] = 1;
+      // telephone_numbers.insert( { telephone_number, 1 } );
     }
 
   }
 
+  bool have_duplicates = false;
   for (std::map<std::string, std::size_t>::iterator it = telephone_numbers.begin();
        it != telephone_numbers.end(); ++it) {
     if (it->second > 1) {
+      have_duplicates = true;
       printf("%s %d\r\n", it->first.c_str(), it->second);
     }
+  }
+  if (!have_duplicates) {
+    printf("No duplicates.\r\n");
   }
 
   return 0;
