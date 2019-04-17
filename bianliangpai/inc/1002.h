@@ -1,38 +1,91 @@
 #ifndef __1002_H__
 #define __1002_H__
 
+#include <cstdlib>
 #include <cstdio>
-#include <vector>
+#include <map>
 #include <string>
 #include <stdexcept>
 
-const static int telephone_number_length = 7;
+const static int telephone_number_length = 8;
+
+int ConvertLetterToDigit(char ch) {
+  try {
+    switch (ch) {
+    case 'A':
+    case 'B':
+    case 'C':
+      return 2;
+    case 'D':
+    case 'E':
+    case 'F':
+      return 3;
+    case 'G':
+    case 'H':
+    case 'I':
+      return 4;
+    case 'J':
+    case 'K':
+    case 'L':
+      return 5;
+    case 'M':
+    case 'N':
+    case 'O':
+      return 6;
+    case 'P':
+    case 'R':
+    case 'S':
+      return 7;
+    case 'T':
+    case 'U':
+    case 'V':
+      return 8;
+    case 'W':
+    case 'X':
+    case 'Y':
+      return 9;
+    default:
+      throw std::runtime_error("error input");
+    }
+  }
+  catch (const std::exception& e) {
+    printf("File: %s, Line: %d, Reason: %s\n", __FILE__, __LINE__, e.what());
+    exit(1);
+  }
+}
 
 // read console input char by char to throw '-' away
 // which could reduce momory copy operation
-void ReadTelephoneNumbersFromConsole(std::vector<std::string>& telephone_numbers) {
+void ReadTelephoneNumber(std::string& telephone_number) {
   try {
-    // preprocessing input telephone number format
-    for (std::vector<std::string>::iterator it = telephone_numbers.begin();
-         it != telephone_numbers.end();
-         ++it) {
-      for (int telephone_number_it = 0; ; ) {
-        char ch;
-        std::scanf("%c", &ch);
-        if ((ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z')) {
-          if (telephone_number_it >= telephone_number_length) {
-            throw std::runtime_error("telephone number length invalid");
-          }
-          it->operator[](telephone_number_it) = ch;
-          ++telephone_number_it;
-        }
-        else if (ch == '\n') {
-          break;
-        }
-        // '\r', '-'
-        else {
-          continue;
-        }
+    for (int telephone_number_it = 0; ; ) {
+
+      if (telephone_number_it > telephone_number_length) {
+        throw std::runtime_error("telephone number length invalid");
+      }
+
+      // result format is xxx-xxxx
+      if (telephone_number_it == 3) {
+        telephone_number[telephone_number_it] = '-';
+        ++telephone_number_it;
+      }
+
+      char ch;
+      std::scanf("%c", &ch);
+      if ((ch >= '0' && ch <= '9')) {
+        telephone_number[telephone_number_it] = ch;
+        ++telephone_number_it;
+      }
+      else if (ch >= 'A' && ch <= 'Z') {
+        telephone_number[telephone_number_it] = ConvertLetterToDigit(ch);
+        ++telephone_number_it;
+      }
+      else if (ch == '\n') {
+        break;
+      }
+      // '\r', '-'
+      else {
+        continue;
       }
     }
   }

@@ -7,11 +7,31 @@ int main() {
     return 1;
   }
 
-  std::vector<std::string>
-    telephone_numbers(n_telephone_numbers,
-                      std::string(telephone_number_length, '\0'));
+  std::map<std::string, std::size_t> telephone_numbers;
+  for (int i = 0; i < n_telephone_numbers; ++i) {
 
-  ReadTelephoneNumbersFromConsole(telephone_numbers);
+    // preprocess line input
+    std::string telephone_number(telephone_number_length, '\0');
+    ReadTelephoneNumber(telephone_number);
+
+    // search and count
+    std::map<std::string, std::size_t>::iterator it =
+      telephone_numbers.find(telephone_number);
+    if (it != telephone_numbers.end()) {
+      ++it->second;
+    }
+    else {
+      telephone_numbers.insert( { telephone_number, 1 } );
+    }
+
+  }
+
+  for (std::map<std::string, std::size_t>::iterator it = telephone_numbers.begin();
+       it != telephone_numbers.end(); ++it) {
+    if (it->second > 1) {
+      printf("%s %d\r\n", it->first.c_str(), it->second);
+    }
+  }
 
   return 0;
 }
