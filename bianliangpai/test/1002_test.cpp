@@ -29,9 +29,6 @@ TEST(ConvertLetterToDigit, normal) {
   EXPECT_EQ(ConvertLetterToDigit('Y'), '9');
 }
 
-// 12
-// 4873279
-// ITS-EASY
 // 888-4567
 // 3-10-10-10
 // 888-GLOP
@@ -40,8 +37,6 @@ TEST(ConvertLetterToDigit, normal) {
 // 310-GINO
 // F101010
 // 888-1200
-// -4-8-7-3-2-7-9-
-// 487-3279
 
 TEST(GetTelephoneNumber, number_only) {
   std::string line;
