@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <vector>
+#include <list>
 #include <algorithm>
 #include <stdexcept>
 
@@ -75,6 +76,40 @@ void JudgeAllNumbersSmallerThanNIsPrime(int n, std::vector<bool>& is_prime) {
 
     }
 
+  }
+  catch (const std::exception& e) {
+    printf("File: %s, Line: %d, Reason: %s\n", __FILE__, __LINE__, e.what());
+    exit(1);
+  }
+}
+
+void FindAllFactorNumberOf(int number,
+                           const std::list<int>& all_prime,
+                           std::list<int>& factor_list) {
+  try {
+    if (number < 1) {
+      throw std::runtime_error("number smaller than 1");
+    }
+    else if (number == 1) {
+      return;
+    }
+    else if (std::find(all_prime.begin(), all_prime.end(), number)
+             != all_prime.end()) {
+      factor_list.push_back(number);
+    }
+    else {
+      std::list<int>::const_iterator it = all_prime.begin();
+      while (it != all_prime.end()) {
+        if (number % (*it) == 0) {
+          factor_list.push_back(*it);
+          number /= (*it);
+          it = all_prime.begin();
+        }
+        else {
+          ++it;
+        }
+      }
+    }
   }
   catch (const std::exception& e) {
     printf("File: %s, Line: %d, Reason: %s\n", __FILE__, __LINE__, e.what());
