@@ -3,113 +3,40 @@
 
 #include <cstdio>
 #include <cstdlib>
-#include <cmath>
-#include <vector>
-#include <list>
-#include <algorithm>
 #include <stdexcept>
 
-bool IsFactorOf(int factor_candidate, int number) {
+// minimize n
+// n = p_peroid * (t1-1) + p - d
+//   = e_peroid * (t2-1) + e - d
+//   = i_peroid * (t3-1) + i - d
+//
+// max_loop_cnt = e_peroid * i_peroid = 924
+int GetMinimizedN(int p, int e, int i, int d) {
+  static int p_peroid = 23;
+  static int e_peroid = 28;
+  static int i_peroid = 33;
+  static int least_common_multiple = p_peroid * e_peroid * i_peroid; // 21252
+
   try {
-    if (factor_candidate < 1 || number < 1) {
-      throw std::runtime_error("invalid factor or number, smaller than 1");
-    }
-    else if (factor_candidate < 2 || number < 4) {
-      return false;
-    }
-    else if (number % factor_candidate != 0 ||
-             factor_candidate >= number) {
-      return false;
+    int n;
+
+    if (p == 0 && e == 0 && i == 0) {
+      n = least_common_multiple;
     }
     else {
-      return true;
-    }
-  }
-  catch (const std::exception& e) {
-    printf("File: %s, Line: %d, Reason: %s\n", __FILE__, __LINE__, e.what());
-    exit(1);
-  }
-}
+      p %= p_peroid;
+      e %= e_peroid;
+      i %= i_peroid;
 
-void JudgeAllNumbersSmallerThanNIsPrime(int n, std::vector<bool>& is_prime) {
-  try {
-    is_prime.resize(n, false);
-
-    // for number 1, 2, 3
-    is_prime[0] = false;
-    is_prime[1] = true;
-    is_prime[2] = true;
-
-    // do calculation
-    for (int number = 1; number < n; ++number) {
-
-      if (is_prime[number]) {
-        continue;
-      }
-      else {
-
-        std::vector<bool>::iterator start_position = is_prime.begin();
-
-        int current_prime = 2;
-        do {
-          std::vector<bool>::iterator it =
-            std::find(start_position, is_prime.end(), true);
-
-          if (it == is_prime.end()) {
-            start_position = it;
-          }
-          else {
-            // if current_prime is factor of number && it = end() - 1
-            // then number must equal to current_prime
-            // which situation is impossible to appear here
-            current_prime = std::distance(is_prime.begin(), it) + 1;
-            start_position = it + 1;
-          }
-        } while (start_position != is_prime.end() &&
-                 !IsFactorOf(current_prime, number));
-
-        if (start_position == is_prime.end()) {
-          is_prime[number-1] = true;
-        }
-
-      }
-
-    }
-
-  }
-  catch (const std::exception& e) {
-    printf("File: %s, Line: %d, Reason: %s\n", __FILE__, __LINE__, e.what());
-    exit(1);
-  }
-}
-
-void FindAllFactorNumberOf(int number,
-                           const std::list<int>& all_prime,
-                           std::list<int>& factor_list) {
-  try {
-    if (number < 1) {
-      throw std::runtime_error("number smaller than 1");
-    }
-    else if (number == 1) {
-      return;
-    }
-    else if (std::find(all_prime.begin(), all_prime.end(), number)
-             != all_prime.end()) {
-      factor_list.push_back(number);
-    }
-    else {
-      std::list<int>::const_iterator it = all_prime.begin();
-      while (it != all_prime.end()) {
-        if (number % (*it) == 0) {
-          factor_list.push_back(*it);
-          number /= (*it);
-          it = all_prime.begin();
-        }
-        else {
-          ++it;
+      for (int t1 = 1; ; ++t1) {
+        n = p_peroid * (t1-1) + p;
+        if (n % e_peroid == e && n % i_peroid == i) {
+          break;
         }
       }
     }
+
+    return n - d;
   }
   catch (const std::exception& e) {
     printf("File: %s, Line: %d, Reason: %s\n", __FILE__, __LINE__, e.what());
