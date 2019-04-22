@@ -20,17 +20,17 @@ int GetMinimizedN(int p, int e, int i, int d) {
   try {
     int n;
 
-    if (p == 0 && e == 0 && i == 0) {
-      n = least_common_multiple;
-    }
-    else {
-      p %= p_peroid;
-      e %= e_peroid;
-      i %= i_peroid;
+    p %= p_peroid;
+    e %= e_peroid;
+    i %= i_peroid;
 
-      for (int t1 = 1; ; ++t1) {
-        n = p_peroid * (t1-1) + p;
-        if (n % e_peroid == e && n % i_peroid == i) {
+    for (int t1 = 1; ; ++t1) {
+      n = p_peroid * (t1-1) + p;
+      if (n % e_peroid == e && n % i_peroid == i) {
+        if (n <= d) {
+          continue;
+        }
+        else {
           break;
         }
       }
