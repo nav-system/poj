@@ -1,37 +1,31 @@
 #ifndef __GENERIC_H__
 #define __GENERIC_H__
 
-#include <cstdio>
 #include <cstdlib>
+#include <iostream>
 #include <stdexcept>
 #include <algorithm>
 
 
-// Container1.size() must bigger than Container2.size()
-template <
-  typename T,
-  template <typename = T> class Container1,
-  template <typename = T> class Container2
+template<
+  typename T = std::string,
+  template <typename = T, typename = std::allocator<T>> class SequenceContainer
 >
-bool __ContainerCompare(const typename Container1<T>::iterator c1_begin,
-                        const typename Container1<T>::iterator c1_end,
-                        const typename Container2<T>::iterator c2_begin) {
+void Split(std::string s, const std::string& delimiter,
+           SequenceContainer<std::string>& sc) {
   try {
-    typename Container1<T>::iterator c1_it = c1_begin;
-    typename Container2<T>::iterator c2_it = c2_begin;
-    while (c1_it != c1_end) {
-      if (*c1_it != *c2_it) {
-        return false;
-      }
-      else {
-        ++c1_it;
-        ++c2_it;
-      }
+    std::size_t pos = 0;
+    std::string token;
+    while ((pos = s.find(delimiter)) != std::string::npos) {
+        token = s.substr(0, pos);
+        sc.push_back(token);
+        s.erase(0, pos + delimiter.length());
     }
-    return true;
+    sc.push_back(s);
   }
   catch (const std::exception& e) {
-    printf("File: %s, Line: %d, Reason: %s\n", __FILE__, __LINE__, e.what());
+    std::cerr << "File: " << __FILE__ << ", Line: " << __LINE__
+              << ", Reason: " << e.what() << std::endl;
     exit(1);
   }
 }
