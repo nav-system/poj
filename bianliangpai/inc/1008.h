@@ -10,12 +10,8 @@
 #include <stdexcept>
 
 
-template<
-  typename T = std::string,
-  template <typename = T, typename = std::allocator<T>> class SequenceContainer
->
 void Split(std::string s, const std::string& delimiter,
-           SequenceContainer<std::string>& sc) {
+           std::vector<std::string>& sc) {
   try {
     std::size_t pos = 0;
     std::string token;
@@ -101,9 +97,9 @@ void GetHaabInfo(const std::string& line,
     Split(line, " ", words);
     words[0].erase(words[0].length()-1, 1);
 
-    date = std::stoi(words[0]);
+    date = std::atoi(words[0].c_str());
     str_month = words[1];
-    years = std::stoi(words[2]);
+    years = std::atoi(words[2].c_str());
   }
   catch (const std::exception& e) {
     std::cerr << "File: " << __FILE__ << ", Line: " << __LINE__
