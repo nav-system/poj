@@ -49,7 +49,12 @@ int main() {
         residual_days_in_a_year = total_days - tzolkin_years * days_in_a_tzolkin_year;
       }
       // tzolkin_month and tzolkin_date are individual
-      int int_tzolkin_month = residual_days_in_a_year % months_in_a_tzolkin_year - 1;
+      int int_tzolkin_month =
+        residual_days_in_a_year % months_in_a_tzolkin_year == 0 ?
+        months_in_a_tzolkin_year-1 : residual_days_in_a_year % months_in_a_tzolkin_year - 1;
+      if (int_tzolkin_month >= 20 || int_tzolkin_month < 0) {
+        throw std::runtime_error("int_tzolkin_month >= 20 || int_tzolkin_month < 0");
+      }
       std::string tzolkin_month = tzolkin_months[int_tzolkin_month];
       int tzolkin_date = residual_days_in_a_year % days_in_a_tzolkin_month;
 

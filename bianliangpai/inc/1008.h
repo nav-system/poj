@@ -95,6 +95,9 @@ void GetHaabInfo(const std::string& line,
   try {
     std::vector<std::string> words;
     Split(line, " ", words);
+    if (words.size() != 3) {
+      throw std::runtime_error("input format invalid");
+    }
     words[0].erase(words[0].length()-1, 1);
 
     date = std::atoi(words[0].c_str());
