@@ -89,29 +89,31 @@ result_t char_multiple (char* input_1, int input_1_size,
 {
     int i,j,k;
     char *result_shift, *result_sum, *result_temp;
-    int temp_size = 0, result_size_shift, result_size_sum = 0;
+
+    int temp_size = 0, result_size_shift = 0, result_size_sum = 0;
     for (i = input_2_size - 1, j = 0; i >= 0; i --, j ++)
     {
-         /* input1 char_num_shift_left */
-         char_num_shift_left(input_1, input_1_size, j,
-                 &result_shift, &result_size_shift);
-         DEBUG_INFO("shift left %dst time %s\n", j, result_shift);
-         /* (shifted input1 + shifted input1) for certain times */
-         for (k = 0; k < CHAR_TO_INT(input_2[i]); k++)
-         {
+        /* input1 char_num_shift_left */
+        char_num_shift_left(input_1, input_1_size, j,
+                &result_shift, &result_size_shift);
+        DEBUG_INFO("shift left %dst time %s\n", j, result_shift);
+        /* (shifted input1 + shifted input1) for certain times */
+        for (k = 0; k < CHAR_TO_INT(input_2[i]); k++)
+        {
             DEBUG_INFO("times %d\n", CHAR_TO_INT(input_2[i]));
             DEBUG_INFO("before loop add result %s\n", result_sum);
             char_num_sum(result_sum, result_size_sum,
                     result_shift, result_size_shift,
                     &result_sum, &result_size_sum );
+
             DEBUG_INFO("loop add result %s\n", result_sum);
-         }
+        }
          /* write down the result of current shift, then another loop */
-         char_num_sum(result_temp, temp_size,
+        char_num_sum(result_temp, temp_size,
                  result_sum, result_size_sum,
                  &result_temp, &temp_size);
-         result_size_shift = 0;
-         result_size_sum = 0;
+        result_size_shift = 0;
+        result_size_sum = 0;
     }
     *result = result_temp;
     *result_size = temp_size;
@@ -134,7 +136,7 @@ result_t char_num_power (char* input, int input_size,
     }
     *result = result_temp;
     *result_size = temp_size;
-    DEBUG_INFO( "result_temp %s \n",result_temp );
+    DEBUG_INFO( "result_power %s \n",result_temp );
     return SUCCESS;
 }
 
@@ -148,7 +150,7 @@ int main()
         DEBUG_INFO("original input %s %d\n", num, times);
 
         long long int num_without_point = 0;
-        int num_before_point = 0;
+        int num_before_point = 255;
         int num_after_point = 0;
         int num_size = 0;
 
@@ -166,23 +168,26 @@ int main()
                 num_before_point = i;
             }
         }
-        num_after_point = INPUT_SIZE - 1 - num_before_point;
-
-        if (num_without_point == 0)
+        if (num_before_point == 255)
         {
-            printf ("0\r\n");
-            continue;
+            num_before_point = INPUT_SIZE;
+            num_after_point = 0;
+        }
+        else
+        {
+            num_after_point = INPUT_SIZE - 1 - num_before_point;
         }
         if (times == 0)
         {
             printf ("1\r\n");
             continue;
         }
-        if (times == 1)
+        if (num_without_point == 0)
         {
-            printf ("%s\r\n", num);
+            printf ("0\r\n");
             continue;
         }
+
         while (num_char_no_ptr[0] == '0')
         {
             int i;
@@ -194,7 +199,7 @@ int main()
             num_before_point --;
         }
         num_size = num_before_point + num_after_point;
-        DEBUG_INFO("num %lld\n", num_without_point);
+        DEBUG_INFO("num %s\n", num_char_no_ptr);
         DEBUG_INFO("times %d\n", times);
         DEBUG_INFO("num before point %d\n", num_before_point);
         DEBUG_INFO("num after point %d\n", num_after_point);
@@ -207,31 +212,41 @@ int main()
                 &result, &result_size);
         DEBUG_INFO("result %s \n", result);
 
-        int num_after_point_result = times*num_after_point;
-        while (result[result_size - 1] == '0')
+        int num_after_point_result = times * num_after_point;
+        DEBUG_INFO("result size %d %d \n", result_size, num_after_point_result);
+        while (result[result_size - 1] == '0' && num_after_point_result > 0)
         {
             result_size -= 1;
             num_after_point_result -= 1;
         }
+        result[result_size]='\0';
+        DEBUG_INFO("result after removing 0 %s \n", result);
+        DEBUG_INFO("size after removing 0 %d %d \n", result_size, num_after_point_result);
         /* if num_after_point_result > total num of result; start with 0. then until all number printed
          * if num_after_point_result < total_num of result; print delta num, then point, then the reset
          */
         if (num_after_point_result >= result_size)
         {
             printf(".");
-            char *temp = malloc((num_after_point_result - result_size)*sizeof(char));
+            char *temp =(char*) malloc((num_after_point_result - result_size)*sizeof(char));
             memset (temp, '0', (num_after_point_result - result_size));
-            printf("%s", temp);
-            printf("%s", result);
+            printf("%.*s", num_after_point_result - result_size, temp);
+            printf("%.*s", result_size, result);
             printf("\r\n");
+            free (temp);
         }
         else
         {
             printf("%.*s", result_size - num_after_point_result, result);
-            printf(".");
-            printf("%.*s", num_after_point_result, result + (result_size - num_after_point_result));
+            if (num_after_point_result != 0)
+            {
+                printf(".");
+                printf("%.*s", num_after_point_result, result + (result_size - num_after_point_result));
+            }
             printf("\r\n");
         }
+        memset (num, 0, INPUT_SIZE * sizeof(char));
+        memset (num_char_no_ptr, 0, INPUT_SIZE * sizeof(char));
     }
 
     return 0;
